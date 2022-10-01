@@ -1,7 +1,16 @@
 #!/usr/bin/env node
+"use strict";
+import yargs from "yargs";
+import { ethers, Wallet } from "ethers";
+import dotenv from "dotenv";
+import chalk from 'chalk';
+import inquirer from 'inquirer';
+import { v4 as uuidv4 } from 'uuid';
 
-const yargs = require("yargs");
-const { ethers, Wallet } = require("ethers");
+// read in settings
+dotenv.config();
+
+const sleep = (ms = 2000) => new Promise((r) => setTimeout(r, ms));
 // const provider = new ethers.providers.JsonRpcProvider();
 // const signer = provider.getSigner();
 // 
@@ -28,14 +37,104 @@ const options = yargs
  .option("n", { alias: "name", describe: "Your name", type: "string", demandOption: true })
  .argv;
 
+ 
+
 const greeting = `Hello, ${options.name}!`;
 // console.log(ethers);
 // console.log(web3.eth.accounts.create());
 console.log(greeting);
 
+uuidv4(); // ⇨ '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed'
 const mnemonic = "announce room limb pattern dry unit scale effort smooth jazz weasel alcohol"
-walletMnemonic = Wallet.fromMnemonic(mnemonic);
+const walletMnemonic = Wallet.fromMnemonic(mnemonic);
 console.log(walletMnemonic);
+console.log( chalk.bold( "You have successfully authenticated your CLI application!" ) );
+console.log( chalk.red( 'err' ) );
+
+const main = async () => {
+  try {
+    async function welcome() {
+      console.log(chalk.bgBlue('ELXOME'));
+    
+      await sleep();
+    
+      console.log(`
+        ${chalk.bgBlue('HOW TO PLAY')} 
+        I am a process on your computer.
+        If you get any question wrong I will be ${chalk.bgRed('killed')}
+        So get all the questions right...
+      `);
+    }
+    
+    await welcome();
+    
+    let playerName = '';
+    
+    async function askName() {
+      const answers = await inquirer.prompt({
+        name: 'player_name',
+        type: 'input',
+        message: 'What is your name?',
+        default() {
+          return 'Player';
+        },
+      });
+    
+      playerName = answers.player_name;
+    }
+    
+    await askName();
+    
+    console.log(`Hello, ${playerName}!`);
+  } catch ( err ) {
+    console.log( chalk.red( err ) );
+  }
+ };
+ 
+ main();
+
+ const log = console.log;
+
+// Combine styled and normal strings
+log(chalk.blue('Hello') + ' World' + chalk.red('!'));
+
+// Compose multiple styles using the chainable API
+log(chalk.blue.bgRed.bold('Hello world!'));
+
+// Pass in multiple arguments
+log(chalk.blue('Hello', 'World!', 'Foo', 'bar', 'biz', 'baz'));
+
+// Nest styles
+log(chalk.red('Hello', chalk.underline.bgBlue('world') + '!'));
+
+// Nest styles of the same type even (color, underline, background)
+log(chalk.green(
+	'I am a green line ' +
+	chalk.blue.underline.bold('with a blue substring') +
+	' that becomes green again!'
+));
+
+// ES2015 template literal
+log(`
+CPU: ${chalk.red('90%')}
+RAM: ${chalk.green('40%')}
+DISK: ${chalk.yellow('70%')}
+`);
+
+// Use RGB colors in terminal emulators that support it.
+log(chalk.rgb(123, 45, 67).underline('Underlined reddish color'));
+log(chalk.hex('#DEADED').bold('Bold gray!'));
+
+const error = chalk.bold.red;
+const warning = chalk.hex('#FFA500'); // Orange color
+
+console.log(error('Error!'));
+console.log(warning('Warning!'));
+
+const name = 'Sindre';
+console.log(chalk.green('Hello %s'), name);
+
+// console.clear();
 
 /*// Create a wallet instance from a mnemonic...
 mnemonic = "announce room limb pattern dry unit scale effort smooth jazz weasel alcohol"
