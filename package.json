@@ -1,0 +1,25 @@
+{
+  "name": "poc-nodejs-web3-consoleapp",
+  "version": "1.0.0",
+  "description": "web3 console app made with nodejs",
+  "main": "bin/index.js",
+  "repository": "git@github.com:bennotti/poc-nodejs-web3-consoleapp.git",
+  "author": "bruno bennotti",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "start": "node .",
+    "eslint": "eslint --fix src/*.js bin/*.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "consoleapp": "./bin/index.js"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0"
+  },
+  "dependencies": {
+    "ethers": "^5.7.1",
+    "yargs": "^13.2.4"
+  }
+}
